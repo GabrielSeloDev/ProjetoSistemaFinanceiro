@@ -22,6 +22,7 @@ class Conta(db.Model):
 
     usuario_id = db.Column(db.Integer, db.ForeignKey('tb_usuario.id'), nullable=False)
 
+    #Relacionamento
     lancamentos = db.relationship('Lancamento', backref='conta')
     
 class Categoria(db.Model):
@@ -33,6 +34,7 @@ class Categoria(db.Model):
 
     usuario_id = db.Column(db.Integer, db.ForeignKey('tb_usuario.id'), nullable=False)
 
+    #Relacionamento
     lancamentos = db.relationship('Lancamento', backref='categoria')
 
 class Lancamento(db.Model):
@@ -41,7 +43,7 @@ class Lancamento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(20), nullable=False)
     data = db.Column(db.DateTime, nullable=False, server_default=func.now())
-    tipo =  db.Column(Enum('entrada', 'saida', name='tipoLancamento'))
+    tipo =  db.Column(Enum('entrada', 'saida', name='tipoLancamento'), nullable=False)
     valor = db.Column(db.Numeric(10, 2), nullable=False)
 
     usuario_id = db.Column(db.Integer, db.ForeignKey('tb_usuario.id'), nullable=False)
