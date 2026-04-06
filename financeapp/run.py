@@ -1,4 +1,7 @@
-from src.microtask import create_app
+from dotenv import load_dotenv
+load_dotenv()
+
+from src.finance import create_app
 
 app = create_app()
 
