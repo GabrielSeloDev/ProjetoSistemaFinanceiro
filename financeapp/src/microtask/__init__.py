@@ -9,7 +9,7 @@ def create_app():
 
     @app.route("/")
     def home():
-        return "Aplicação funcionando"
+        return "Aplicação Funcionando"
     @app.route("/status")
     def status():
         return {"status": "ok"}
