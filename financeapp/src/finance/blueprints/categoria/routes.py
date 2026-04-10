@@ -1,16 +1,20 @@
-from flask import render_template
+from flask import render_template, request, redirect, url_for # <-- Adicionei redirect e url_for aqui!
 from . import bp
-from ...models import Categoria
+from ...models import Categoria, Usuario
 from ...extensions import db
-from flask import Blueprint, render_template, request
 
+# Rota para listar as categorias
+@bp.get('/')
+def listar_categorias():
+    categorias = Categoria.query.join(Usuario).order_by(Usuario.nome, Categoria.nome).all()
+    return render_template('categorias/listar.html', categorias=categorias)
 
-#Rota para pagina para criar categoria
-
+# Rota para pagina para criar categoria
 @bp.get('/novo')
 def criar_categoria():
     return render_template('categorias/criar_categoria.html')
 
+# Rota de salvamento dos dados da categoria
 @bp.post('/novo')
 def salvar_categoria():
     nome_cat = request.form.get('nome')
@@ -21,4 +25,14 @@ def salvar_categoria():
     db.session.add(nova_categoria)
     db.session.commit()
 
-    return render_template('pages/home.html')
+    return redirect(url_for('categoria.listar_categorias'))
+
+@bp.post('/deletar/<int:id>')
+def deletar_categoria(id):
+    categoria = Categoria.query.get_or_404(id)
+    
+    db.session.delete(categoria)
+    db.session.commit()
+    
+    
+    return redirect(url_for('categoria.listar_categorias'))

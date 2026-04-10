@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Categorias{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>Categorias</h1>
+        <p class="muted">Lista de todas as categorias cadastradas, ordenadas por usuário.</p>
+        
+        <div style="margin-top: 24px; margin-bottom: 32px;">
+            
+            {% for grupo in categorias|groupby('usuario.nome') %}
+                
+                <div style="margin-bottom: 24px;">
+                    <h3 style="border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 16px;">
+                        👤 {{ grupo.grouper }}
+                    </h3>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                        {% for categoria in grupo.list %}
+                            
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                
+                                <span class="badge-categoria" style="background-color: {{ categoria.cor }};">
+                                    {{ categoria.nome }}
+                                </span>
+                                
+                                <form action="{{ url_for('categoria.deletar_categoria', id=categoria.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja apagar a categoria {{ categoria.nome }}?');">
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 2px; transition: transform 0.2s;" title="Apagar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                        🗑️
+                                    </button>
+                                </form>
+                                
+                            </div>
+                            
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            {% else %}
+                <p class="muted">Nenhuma categoria cadastrada no sistema ainda.</p>
+            {% endfor %}
+            
+        </div>
+
+        <a href="{{ url_for('categoria.criar_categoria') }}" class="btn">
+            + Nova Categoria
+        </a>
+    </div>
+{% endblock %}
