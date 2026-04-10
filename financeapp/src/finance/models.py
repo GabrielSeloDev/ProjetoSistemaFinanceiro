@@ -24,6 +24,13 @@ class Conta(db.Model):
 
     #Relacionamento
     lancamentos = db.relationship('Lancamento', backref='conta')
+
+    #Calculo do saldo
+    @property
+    def saldo(self):
+        total_entradas = sum(l.valor for l in self.lancamentos if l.tipo == 'entrada')
+        total_saidas = sum(l.valor for l in self.lancamentos if l.tipo == 'saida')
+        return total_entradas - total_saidas
     
 class Categoria(db.Model):
     __tablename__ = 'tb_categoria'
