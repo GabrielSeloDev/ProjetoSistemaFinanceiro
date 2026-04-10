@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Usuário{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>Editar Usuário</h1>
+        <p class="muted">Altere as informações de <strong>{{ usuario.nome }}</strong>.</p>
+
+        <form action="{{ url_for('usuarios.editar_usuario', id=usuario.id) }}" method="POST">
+            
+            <div style="margin-bottom: 15px;">
+                <label for="nome">Nome do Usuário:</label>
+                <input type="text" id="nome" name="nome" value="{{ usuario.nome }}" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;" required>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" value="{{ usuario.email }}" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;" required>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn" style="background: #111827; color: white; cursor: pointer;">
+                    Salvar Alterações
+                </button>
+                
+                <a href="{{ url_for('usuarios.listar_usuarios') }}" class="btn" style="background: #e5e7eb; color: #374151; text-decoration: none; border: 1px solid #d1d5db;">
+                    Cancelar
+                </a>
+            </div>
+            
+        </form>
+    </div>
+{% endblock %}

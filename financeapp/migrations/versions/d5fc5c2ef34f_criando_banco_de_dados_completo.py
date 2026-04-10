@@ -1,8 +1,8 @@
 """Criando banco de dados completo
 
-Revision ID: 7c72d7354cc1
+Revision ID: d5fc5c2ef34f
 Revises: 
-Create Date: 2026-04-10 10:39:26.668248
+Create Date: 2026-04-10 18:31:35.368287
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7c72d7354cc1'
+revision = 'd5fc5c2ef34f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,7 +35,8 @@ def upgrade():
     )
     op.create_table('tb_conta',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('nome', sa.String(length=20), nullable=False),
+    sa.Column('nome', sa.String(length=50), nullable=False),
+    sa.Column('saldo_inicial', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('usuario_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['usuario_id'], ['tb_usuario.id'], ),
     sa.PrimaryKeyConstraint('id')

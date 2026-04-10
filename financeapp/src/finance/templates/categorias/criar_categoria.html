@@ -9,20 +9,28 @@
         <form action="{{ url_for('categoria.salvar_categoria') }}" method="POST">
             
             <div style="margin-bottom: 15px;">
-                <label for="usuario_id">ID do Usuário (Dono da Categoria):</label>
-                <input type="number" id="usuario_id" name="usuario_id" required>
+                <label for="usuario_id">Dono da Categoria (Usuário):</label>
+                <select id="usuario_id" name="usuario_id" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;" required>
+                    <option value="">-- Selecione o usuário --</option>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}">{{ usuario.nome }}</option>
+                    {% endfor %}
+                </select>
             </div>
+
             <div style="margin-bottom: 15px;">
                 <label for="nome">Nome da categoria:</label>
-                <input type="text" id="nome" name="nome" required>
+                <input type="text" id="nome" name="nome" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;" required>
             </div>
 
             <div style="margin-bottom: 15px;">
                 <label for="cor">Cor:</label>
-                <input type="color" id="cor" name="cor" value="#ff0000" required>
+                <input type="color" id="cor" name="cor" value="#ff0000" style="width: 100%; padding: 0; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; height: 35px;" required>
             </div>
 
-            <button type="submit">Salvar Categoria</button>
+            <button type="submit" class="btn" style="background: #111827; color: white; cursor: pointer; padding: 10px 15px; border: none; border-radius: 5px;">
+                Salvar Categoria
+            </button>
             
         </form>
     </div>

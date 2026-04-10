@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Contas Bancárias{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>Contas Bancárias</h1>
+        <p class="muted">Gerencie suas contas e saldos.</p>
+
+        <table class="table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e5e7eb; text-align: left;">
+                    <th style="padding: 12px 8px;">ID</th>
+                    <th style="padding: 12px 8px;">Nome da Conta</th>
+                    <th style="padding: 12px 8px;">Dono (Usuário)</th>
+                    <th style="padding: 12px 8px;">Saldo Inicial</th>
+                    <th style="padding: 12px 8px;">Saldo Atual</th>
+                    <th style="padding: 12px 8px; text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conta in contas %}
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <td style="padding: 12px 8px; color: #6b7280;">{{ conta.id }}</td>
+                    
+                    <td style="padding: 12px 8px;">
+                        <strong>🏦 {{ conta.nome }}</strong>
+                    </td>
+                    
+                    <td style="padding: 12px 8px; color: #4b5563;">
+                        👤 {{ conta.usuario.nome }}
+                    </td>
+
+                    <td style="padding: 12px 8px; color: #6b7280;">
+                        R$ {{ "%.2f"|format(conta.saldo_inicial) }}
+                    </td>
+
+                    <td style="padding: 12px 8px; font-weight: bold; color: {% if conta.saldo >= 0 %}#16a34a{% else %}#dc2626{% endif %};">
+                        R$ {{ "%.2f"|format(conta.saldo) }}
+                    </td>
+
+                    <td style="padding: 12px 8px; display: flex; gap: 10px; align-items: center; justify-content: center; border: none;">
+                        <a href="{{ url_for('contas.editar_conta', id=conta.id) }}" style="text-decoration: none; font-size: 1.1rem; transition: transform 0.2s;" title="Editar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                            ✏️
+                        </a>
+
+                        <form action="{{ url_for('contas.deletar_conta', id=conta.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja apagar a conta: {{ conta.nome }}? Todos os lançamentos vinculados a ela podem quebrar!');">
+                            <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 2px; transition: transform 0.2s;" title="Apagar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                🗑️
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="padding: 20px; text-align: center; color: #6b7280;">
+                        Nenhuma conta cadastrada ainda.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+        <a href="{{ url_for('contas.criar_conta') }}" class="btn" style="background: #111827; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">
+            + Nova Conta
+        </a>
+    </div>
+{% endblock %}

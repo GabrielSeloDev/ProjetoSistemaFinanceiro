@@ -25,8 +25,7 @@ def salvar_usuario():
     db.session.add(novo_usuario)
     db.session.commit()
     
-    # Manda de volta pra Home 
-    return render_template('pages/home.html')
+    return redirect(url_for('usuarios.listar_usuarios'))
 
 # Rota pra deletar o usuario
 @bp.post('/<int:id>/deletar')
@@ -40,3 +39,20 @@ def deletar_usuario(id):
     
     # Redireciona de volta para a tabela de listagem de usuários
     return redirect(url_for('usuarios.listar_usuarios'))
+
+@bp.route('/<int:id>/editar', methods=['GET', 'POST'])
+def editar_usuario(id):
+
+    usuario = Usuario.query.get_or_404(id)
+
+    if request.method == 'POST':
+
+        usuario.nome = request.form.get('nome')
+        usuario.email = request.form.get('email')
+        
+
+        db.session.commit()
+        return redirect(url_for('usuarios.listar_usuarios'))
+
+
+    return render_template('usuarios/editar_usuario.html', usuario=usuario)

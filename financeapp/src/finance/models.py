@@ -17,20 +17,26 @@ class Usuario(db.Model):
 
 class Conta(db.Model):
     __tablename__ = 'tb_conta'
+    
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(20), nullable=False)
+    nome = db.Column(db.String(50), nullable=False) # Aumentado para 50
+    
+  
+    saldo_inicial = db.Column(db.Numeric(10, 2), default=0.00, nullable=False) 
 
     usuario_id = db.Column(db.Integer, db.ForeignKey('tb_usuario.id'), nullable=False)
 
-    #Relacionamento
+    # Relacionamento
     lancamentos = db.relationship('Lancamento', backref='conta')
 
-    #Calculo do saldo
+    # Calculo do saldo atualizado
     @property
     def saldo(self):
-        total_entradas = sum(l.valor for l in self.lancamentos if l.tipo == 'entrada')
-        total_saidas = sum(l.valor for l in self.lancamentos if l.tipo == 'saida')
-        return total_entradas - total_saidas
+        # ATENÇÃO AQUI: Coloquei float(l.valor) para garantir a conversão!
+        total_entradas = sum(float(l.valor) for l in self.lancamentos if l.tipo == 'entrada')
+        total_saidas = sum(float(l.valor) for l in self.lancamentos if l.tipo == 'saida')
+        
+        return float(self.saldo_inicial) + total_entradas - total_saidas
     
 class Categoria(db.Model):
     __tablename__ = 'tb_categoria'
@@ -52,6 +58,7 @@ class Lancamento(db.Model):
     data = db.Column(db.DateTime, nullable=False, server_default=func.now())
     tipo =  db.Column(Enum('entrada', 'saida', name='tipoLancamento'), nullable=False)
     valor = db.Column(db.Numeric(10, 2), nullable=False)
+
 
     usuario_id = db.Column(db.Integer, db.ForeignKey('tb_usuario.id'), nullable=False)
     conta_id = db.Column(db.Integer, db.ForeignKey('tb_conta.id'), nullable=False)

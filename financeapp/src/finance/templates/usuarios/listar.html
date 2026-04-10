@@ -1,23 +1,51 @@
 {% extends "base.html" %}
+
 {% block title %}Usuários{% endblock %}
 
 {% block content %}
-  <h1>Usuários</h1>
+    <div class="card">
+        <h1>Usuários</h1>
+        <p class="muted">Gerencie os usuários cadastrados no sistema.</p>
+        
+        <div style="margin-top: 24px; margin-bottom: 32px;">
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                {% for usuario in usuarios %}
+                    
+                    <div style="display: flex; align-items: center; gap: 8px; background-color: #f9fafb; padding: 10px 16px; border-radius: 8px; border: 1px solid #e5e7eb; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        
+                        <span style="font-weight: bold; color: #111827;">
+                            👤 {{ usuario.nome }}
+                        </span>
+                        <span style="color: #6b7280; font-size: 0.9em; margin-right: 10px;">
+                            {{ usuario.email }}
+                        </span>
+                        
+                        <div style="display: flex; gap: 8px; align-items: center; border-left: 1px solid #d1d5db; padding-left: 12px;">
+                            
+                            <a href="{{ url_for('usuarios.editar_usuario', id=usuario.id) }}" style="text-decoration: none; font-size: 1.1rem; transition: transform 0.2s;" title="Editar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                ✏️
+                            </a>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th><th>Nome</th><th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for u in usuarios %}
-      <tr>
-        <td>{{ u.id }}</td>
-        <td>{{ u.nome }}</td>
-        <td>{{ u.email }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+                            <form action="{{ url_for('usuarios.deletar_usuario', id=usuario.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja apagar o usuário {{ usuario.nome }}?');">
+                                <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 2px; transition: transform 0.2s;" title="Apagar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                    🗑️
+                                </button>
+                            </form>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                {% else %}
+                    <p class="muted">Nenhum usuário cadastrado no sistema ainda.</p>
+                {% endfor %}
+            </div>
+            
+        </div>
+
+        <a href="{{ url_for('usuarios.criar_usuario') }}" class="btn">
+            + Novo Usuário
+        </a>
+    </div>
 {% endblock %}

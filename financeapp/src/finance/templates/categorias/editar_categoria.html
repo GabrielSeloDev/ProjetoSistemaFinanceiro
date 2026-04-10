@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Editar Categoria{% endblock %}
+{% block content %}
+    <div class="card">
+        <h1>Editar Categoria</h1>
+        
+        <form action="{{ url_for('categoria.editar_categoria', id=categoria.id) }}" method="POST">
+            
+            <div style="margin-bottom: 15px;">
+                <label for="usuario_id">Dono da Categoria (Usuário):</label>
+                <select id="usuario_id" name="usuario_id" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;" required>
+                    {% for usuario in usuarios %}
+                        <option value="{{ usuario.id }}" {% if usuario.id == categoria.usuario_id %}selected{% endif %}>
+                            {{ usuario.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="nome">Nome da categoria:</label>
+                <input type="text" id="nome" name="nome" value="{{ categoria.nome }}" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px;" required>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="cor">Cor:</label>
+                <input type="color" id="cor" name="cor" value="{{ categoria.cor }}" style="width: 100%; padding: 0; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; height: 35px;" required>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn" style="background: #111827; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">
+                    Salvar Categoria
+                </button>
+                <a href="{{ url_for('categoria.listar_categorias') }}" class="btn" style="background: #e5e7eb; color: #374151; border: 1px solid #d1d5db; text-decoration: none; padding: 10px 15px; border-radius: 5px; display: inline-block; text-align: center;">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

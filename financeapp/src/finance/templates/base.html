@@ -195,8 +195,16 @@
                 <div class="dropdown">
                     <button class="dropbtn">Usuarios ▾</button>
                     <div class="dropdown-content">
-                        <a href="{{ url_for('usuario.criar_usuario') }}">Criar usuário</a>
-                        <a href="{{ url_for('usuario.listar_usuarios') }}">Listar usuário</a>
+                        <a href="{{ url_for('usuarios.criar_usuario') }}">Criar usuário</a>
+                        <a href="{{ url_for('usuarios.listar_usuarios') }}">Listar usuário</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">Contas ▾</button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('contas.criar_conta') }}">Criar conta</a>
+                        <a href="{{ url_for('contas.listar_contas') }}">Listar contas</a>
                     </div>
                 </div>
                 
@@ -208,6 +216,14 @@
                     </div>
                 </div>
                 
+                <div class="dropdown">
+                    <button class="dropbtn">Lançamentos ▾</button>
+                    <div class="dropdown-content">
+                        <a href="{{ url_for('lancamentos.criar_lancamento') }}">Criar lancamento</a>
+                        <a href="{{ url_for('lancamentos.listar_lancamentos') }}">Listar lancamentos</a>
+                    </div>
+                </div>
+
                 <a href="{{ url_for('pages.sobre') }}">Sobre</a>
             </nav>
         </div>

@@ -25,6 +25,11 @@
                                     {{ categoria.nome }}
                                 </span>
                                 
+
+                                <a href="{{ url_for('categoria.editar_categoria', id=categoria.id) }}" style="text-decoration: none; font-size: 1.1rem; transition: transform 0.2s;" title="Editar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                    ✏️
+                                </a>
+
                                 <form action="{{ url_for('categoria.deletar_categoria', id=categoria.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja apagar a categoria {{ categoria.nome }}?');">
                                     <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 2px; transition: transform 0.2s;" title="Apagar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
                                         🗑️

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Lançamentos{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>Lançamentos</h1>
+        <p class="muted">Acompanhe todas as suas entradas e saídas de dinheiro.</p>
+
+        <table class="table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #e5e7eb; text-align: left;">
+                    <th style="padding: 12px 8px;">ID</th>
+                    <th style="padding: 12px 8px;">Data</th> <th style="padding: 12px 8px;">Nome</th> <th style="padding: 12px 8px;">Conta</th> <th style="padding: 12px 8px;">Categoria</th>
+                    <th style="padding: 12px 8px;">Tipo</th>
+                    <th style="padding: 12px 8px;">Valor</th>
+                    <th style="padding: 12px 8px; text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lancamento in lancamentos %}
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <td style="padding: 12px 8px; color: #6b7280;">{{ lancamento.id }}</td>
+                    
+                    <td style="padding: 12px 8px; color: #4b5563;">
+                        {{ lancamento.data.strftime('%d/%m/%Y') }}
+                    </td>
+
+                    <td style="padding: 12px 8px;">
+                        <strong>{{ lancamento.nome }}</strong>
+                    </td>
+                    
+                    <td style="padding: 12px 8px; color: #4b5563;">
+                        🏦 {{ lancamento.conta.nome }}
+                    </td>
+
+                    <td style="padding: 12px 8px;">
+                        <span class="badge-categoria" style="background-color: {{ lancamento.categoria.cor }}; padding: 4px 8px; border-radius: 12px; color: white; font-size: 0.85em;">
+                            {{ lancamento.categoria.nome }}
+                        </span>
+                    </td>
+
+                    <td style="padding: 12px 8px;">
+                        {% if lancamento.tipo == 'entrada' %}
+                            <span style="color: #16a34a; font-weight: bold;">Entrada ⬆️</span>
+                        {% else %}
+                            <span style="color: #dc2626; font-weight: bold;">Saída ⬇️</span>
+                        {% endif %}
+                    </td>
+
+                    <td style="padding: 12px 8px; font-weight: bold;">
+                        R$ {{ "%.2f"|format(lancamento.valor) }}
+                    </td>
+
+                    <td style="padding: 12px 8px; display: flex; gap: 10px; align-items: center; justify-content: center; border: none;">
+                        
+                        <a href="{{ url_for('lancamentos.editar_lancamento', id=lancamento.id) }}" style="text-decoration: none; font-size: 1.1rem; transition: transform 0.2s;" title="Editar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                            ✏️
+                        </a>
+
+                        <form action="{{ url_for('lancamentos.deletar_lancamento', id=lancamento.id) }}" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja apagar o lançamento: {{ lancamento.nome }}?');">
+                            <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 2px; transition: transform 0.2s;" title="Apagar" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">
+                                🗑️
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" style="padding: 20px; text-align: center; color: #6b7280;">
+                        Nenhum lançamento cadastrado ainda.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+        <a href="{{ url_for('lancamentos.criar_lancamento') }}" class="btn">
+            + Novo Lançamento
+        </a>
+    </div>
+{% endblock %}
