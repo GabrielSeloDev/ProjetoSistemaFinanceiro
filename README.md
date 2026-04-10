@@ -28,33 +28,33 @@ tb_lancamento : A tabela central do sistema. Registra as movimentações finance
 
 O sistema foi organizado utilizando Flask Blueprints. Abaixo estão as principais rotas implementadas:
 
- Módulo de Usuários
-GET /usuarios/ : Renderiza a tela com a lista de todos os usuários cadastrados.
-GET /usuarios/novo : Renderiza o formulário HTML para criação de um novo usuário.
-POST /usuarios/novo : Recebe os dados do formulário e salva o novo usuário no banco.
-POST /usuarios/<id>/deletar : Remove um usuário específico pelo ID e redireciona a tela.
+ Módulo de Usuários  
+ GET /usuarios/ : Renderiza a tela com a lista de todos os usuários cadastrados.  
+ GET /usuarios/novo : Renderiza o formulário HTML para criação de um novo usuário.  
+ POST /usuarios/novo : Recebe os dados do formulário e salva o novo usuário no banco.  
+ POST /usuarios/<id>/deletar : Remove um usuário específico pelo ID e redireciona a   tela.
 
-Módulo de Lançamentos
-GET /lancamentos/novo : Renderiza o formulário de registro de nova movimentação financeira.
-POST /lancamentos/novo : Aplica as regras de negócio e cadastra o lançamento no banco de dados.
+Módulo de Lançamentos  
+GET /lancamentos/novo : Renderiza o formulário de registro de nova movimentação   financeira.
+POST /lancamentos/novo : Aplica as regras de negócio e cadastra o lançamento no banco   de dados.
 
-Módulo de Páginas (Home e Sobre)
-GET / : Renderiza a página principal do sistema.
-GET /sobre : Renderiza a página com informações sobre o sistema.
+Módulo de Páginas     
+GET / : Renderiza a página principal do sistema.  
+GET /sobre : Renderiza a página com informações sobre o sistema.  
 
-Módulo de Categorias
-GET /categorias/ : Renderiza a tela com a lista de todas as categorias cadastradas, ordenadas por usuário.
-GET /categorias/novo : Renderiza o formulário HTML para a criação de uma nova categoria.
-POST /categorias/novo : Recebe os dados do formulário e salva a nova categoria no banco de dados.
-POST /categorias/deletar/<id> : Remove uma categoria específica pelo ID e redireciona para a lista atualizada.
+Módulo de Categorias  
+GET /categorias/ : Renderiza a tela com a lista de todas as categorias cadastradas, ordenadas por usuário.  
+GET /categorias/novo : Renderiza o formulário HTML para a criação de uma nova categoria.  
+POST /categorias/novo : Recebe os dados do formulário e salva a nova categoria no banco de dados.  
+POST /categorias/deletar/<id> : Remove uma categoria específica pelo ID e redireciona para a lista atualizada.  
 
-Módulo de Contas
-GET /contas/ : Renderiza a tela com a lista de todas as contas cadastradas.
-GET /contas/novo : Renderiza o formulário HTML para a criação de uma nova conta.
-POST /contas/novo : Recebe os dados do formulário e salva a nova conta no banco de dados.
-GET /contas/<id>/editar : Renderiza o formulário HTML preenchido com os dados de uma conta específica para edição.
-POST /contas/<id>/editar : Recebe os novos dados e atualiza as informações da conta no banco de dados.
-POST /contas/deletar/<id> : Remove uma conta específica pelo ID e redireciona para a lista atualizada.
+Módulo de Contas  
+GET /contas/ : Renderiza a tela com a lista de todas as contas cadastradas.  
+GET /contas/novo : Renderiza o formulário HTML para a criação de uma nova conta.  
+POST /contas/novo : Recebe os dados do formulário e salva a nova conta no banco de dados.  
+GET /contas/<id>/editar : Renderiza o formulário HTML preenchido com os dados de uma conta específica para edição.  
+POST /contas/<id>/editar : Recebe os novos dados e atualiza as informações da conta no banco de dados.  
+POST /contas/deletar/<id> : Remove uma conta específica pelo ID e redireciona para a lista atualizada.  
 
 
 # Regras de Negócio
