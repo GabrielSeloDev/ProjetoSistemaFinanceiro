@@ -2,7 +2,7 @@ from flask import render_template
 from . import bp
 from ...models import Usuario
 from ...extensions import db
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, render_template, request, jsonify
 
 # Rota para Listar Usuários (O "READ" do CRUD)
 @bp.route('/', methods=['GET'])
@@ -13,13 +13,20 @@ def listar_usuarios():
     # Se for apenas API:
     return jsonify([{"id": u.id, "nome": u.nome} for u in usuarios]), 200
 
-# Rota para Criar Usuário (O "CREATE" do CRUD)
-@bp.route('/novo', methods=['POST'])
+@bp.get('/novo')
 def criar_usuario():
-    dados = request.json # Pega os dados enviados
-    novo_usuario = Usuario(nome=dados['nome'], email=dados['email'])
+    return render_template('usuarios/criar_usuario.html')
+
+@bp.post('/novo')
+def salvar_usuario():
+
+    nome_digitado = request.form.get('nome')
+    email_digitado = request.form.get('email')
     
+    # Cria o usuário no banco de dados
+    novo_usuario = Usuario(nome=nome_digitado, email=email_digitado)
     db.session.add(novo_usuario)
-    db.session.commit() # Salva no banco [cite: 54]
+    db.session.commit()
     
-    return jsonify({"mensagem": "Usuário criado!"}), 201
+    # Manda de volta pra Home 
+    return render_template('pages/home.html')
