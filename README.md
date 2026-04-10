@@ -48,6 +48,14 @@ GET /categorias/novo : Renderiza o formulário HTML para a criação de uma nova
 POST /categorias/novo : Recebe os dados do formulário e salva a nova categoria no banco de dados.
 POST /categorias/deletar/<id> : Remove uma categoria específica pelo ID e redireciona para a lista atualizada.
 
+Módulo de Contas
+GET /contas/ : Renderiza a tela com a lista de todas as contas cadastradas.
+GET /contas/novo : Renderiza o formulário HTML para a criação de uma nova conta.
+POST /contas/novo : Recebe os dados do formulário e salva a nova conta no banco de dados.
+GET /contas/<id>/editar : Renderiza o formulário HTML preenchido com os dados de uma conta específica para edição.
+POST /contas/<id>/editar : Recebe os novos dados e atualiza as informações da conta no banco de dados.
+POST /contas/deletar/<id> : Remove uma conta específica pelo ID e redireciona para a lista atualizada.
+
 
 # Regras de Negócio
 
