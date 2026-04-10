@@ -8,10 +8,7 @@ from flask import Blueprint, render_template, request, jsonify
 @bp.route('/', methods=['GET'])
 def listar_usuarios():
     usuarios = Usuario.query.all()
-    # Se você estiver usando templates HTML:
-    #return render_template('usuarios.html', usuarios=usuarios)
-    # Se for apenas API:
-    return jsonify([{"id": u.id, "nome": u.nome} for u in usuarios]), 200
+    return render_template('usuarios/listar.html', usuarios=usuarios)
 
 @bp.get('/novo')
 def criar_usuario():
